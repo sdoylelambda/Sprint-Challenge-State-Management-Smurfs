@@ -27,17 +27,14 @@
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .card {
   background-color: lightblue;
   max-width: 800px;
-  margin: 20px 20px;
-  padding: 20px 20px;
+ 
+  margin: 20px 20px ;
+  padding: 20px 20px ; 
 }

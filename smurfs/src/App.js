@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
+import "./App.scss";
 import SmurfView from "./ views/SmurfView";
 // import renderer from 'react-test-renderer';
 
