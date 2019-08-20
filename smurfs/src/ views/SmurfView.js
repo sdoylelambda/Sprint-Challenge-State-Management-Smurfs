@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import SmurfList from "../components/SmurfList";
-import { getSmurfs, addNewSmurf } from '../actions';
+import { getSmurfs, addNewSmurf, deleteSmurf } from '../actions';
 
 class SmurfView extends React.Component {
     constructor(props){
@@ -111,7 +111,8 @@ class SmurfView extends React.Component {
                         onChange={this.handleChange}
                     />
                     <button>Add Smurf</button>
-
+            
+                    {/* <button onClick={this.deleteSmurf}>Delete Smurf</button> */}
                 </form>
             </div>
 
@@ -139,5 +140,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { getSmurfs, addNewSmurf }
+    { getSmurfs, addNewSmurf, deleteSmurf }
 )(SmurfView)

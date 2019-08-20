@@ -1,5 +1,6 @@
 import { FETCH_SMURFS_START, FETCH_SMURFS_FAILURE, FETCH_SMURFS_SUCCESS,
-    ADD_SMURFS_START, ADD_SMURFS_FAILURE, ADD_SMURFS_SUCCESS
+    ADD_SMURFS_START, ADD_SMURFS_FAILURE, ADD_SMURFS_SUCCESS, DELETE_SMURFS_START, 
+    DELETE_SMURFS_FAILURE, DELETE_SMURFS_SUCCESS
  } from "../actions"
 
 const initialState = {
@@ -49,6 +50,25 @@ export const smurfReducer = (state = initialState, action) => {
                 isLoading: false
             }
             case ADD_SMURFS_SUCCESS:
+            return {
+                ...state,
+                error: "",
+                isLoading: false,
+                smurfs: action.payload
+            }
+            case DELETE_SMURFS_START:
+            return {
+                ...state,
+                error: "",
+                isLoading: true
+            }
+            case DELETE_SMURFS_FAILURE:
+            return {
+                ...state,
+                error: action.payload,
+                isLoading: false
+            }
+            case DELETE_SMURFS_SUCCESS:
             return {
                 ...state,
                 error: "",
