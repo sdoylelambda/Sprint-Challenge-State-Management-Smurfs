@@ -1,16 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import SmurfList from "../components/SmurfList";
-import { getSmurfs } from '../actions';
+import { getSmurfs, addNewSmurf } from '../actions';
 
 class SmurfView extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            smurfs: {
+            item: {
                     name: '',
                     age: '',
                     height: '',
+                    isLoading: false,
+                    error: null,
+                    id: ''
             }
         }
     }
@@ -31,13 +34,90 @@ class SmurfView extends React.Component {
         }
     }
 
+    changeHandler = (e) => {
+    e.persist()
+    let value = e.target.value;
+    if(e.target.name === 'age' || 'id') {
+        value = parseInt(value, 10);
+    }
+    this.setState(prevState => ({
+        item: {
+            ...prevState.item,
+            [e.target.name]: value
+        }
+    }));
+    };
 
+    handleSubmit = e => {
+        this.props.addSmurf(e, this.state);
+        this.setState({
+            item: {
+                name: '',
+                age: '',
+                height: '',
+                isLoading: false,
+                error: null,
+                id: ''
+            }
+        })
+    }
+
+    handleChange = e => {
+        this.setState({ [e.target.name]: e.target.value })
+    }
+
+    addSmurf = e => {
+        e.preventDefault();
+        console.log('addSmurf', e)
+        this.props.addNewSmurf(this.state);
+        this.setState({
+           
+                name: '',
+                age: '',
+                height: '',
+            
+        })
+    }
 
     render() {
+        if (this.props.fetching) {
+            return (
+                <p>loading...</p>
+            )
+        }
         return (
-            <div>
+            <div className="card">
+                <div className="form">
+                <form onSubmit={this.addSmurf}>
+                    <input
+                        type='text'
+                        name='name'
+                        placeholder="Enter smurf's name"
+                        value={this.state.name}
+                        onChange={this.handleChange}
+                    />
+                        <input
+                        type='text'
+                        name='height'
+                        placeholder="Enter smurf's height"
+                        value={this.state.height}
+                        onChange={this.handleChange}
+                    />
+                        <input
+                        type='text'
+                        name='age'
+                        placeholder="Enter smurf's age"
+                        value={this.state.age}
+                        onChange={this.handleChange}
+                    />
+                    <button>Add Smurf</button>
+
+                </form>
+            </div>
+
+
             <h1>1</h1>
-            <SmurfList />
+            <SmurfList smurfs={this.props.smurfs} key={this.props.smurfs.name}/>
             </div>
         )
     }
@@ -52,11 +132,12 @@ const mapStateToProps = state => {
         name: state.smurfReducer.name,
         age: state.smurfReducer.age,
         height: state.smurfReducer.height,
+        id: state.smurfReducer.id,
         item: state.smurfReducer.item
     }
 }
 
 export default connect(
     mapStateToProps,
-    { getSmurfs }
+    { getSmurfs, addNewSmurf }
 )(SmurfView)
